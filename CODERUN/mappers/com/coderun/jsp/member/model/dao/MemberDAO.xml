@@ -36,7 +36,7 @@
 		SELECT MEMBER_ID
 		  FROM TB_MEMBER
 		 WHERE MEMBER_NAME = #{ name }
-		   AND MEMBER_EMAIL = #{ email }
+		   AND EMAIL = #{ email }
 	</select>
 	
 	<select id="memberIdCheck" resultType="_int">
