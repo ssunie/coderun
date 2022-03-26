@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="MemberDAO">
+	<resultMap type="com.coderun.jsp.member.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="gender" column="GENDER"/>
+		<result property="type" column="MEMBER_TYPE"/>
+		<result property="freepassYn" column="FREEPASS_YN"/>
+	</resultMap>
+	
+	<select id="selectEncryptedPwd" resultType="java.lang.String">
+		SELECT MEMBER_PWD
+		  FROM TB_MEMBER
+		 WHERE MEMBER_ID = #{ id }
+	</select>
+	
+	<select id="selectLoginMember" resultMap="memberResultMap">
+		SELECT MEMBER_ID
+			 , MEMBER_NAME
+			 , EMAIL
+			 , BIRTHDAY
+			 , GENDER
+			 , MEMBER_TYPE
+			 , FREEPASS_YN
+		  FROM TB_MEMBER
+		 WHERE MEMBER_ID = #{ id }
+	</select>
+	
+	<select id="searchId" resultType="java.lang.String">
+		SELECT MEMBER_ID
+		  FROM TB_MEMBER
+		 WHERE MEMBER_NAME = #{ name }
+		   AND MEMBER_EMAIL = #{ email }
+	</select>
+	
+	<select id="memberIdCheck" resultType="_int">
+		SELECT COUNT(*)
+		  FROM TB_MEMBER
+		 WHERE MEMBER_ID = #{ id }
+	</select>
+	
+	<insert id="insertMember" parameterType="com.coderun.jsp.member.model.dto.MemberDTO">
+		INSERT INTO TB_MEMBER
+		(
+		  MEMBER_ID
+		, MEMBER_PWD
+		, MEMBER_NAME
+		, EMAIL
+		, BIRTHDAY
+		, GENDER
+		)
+		VALUES
+		(
+		  #{ id }
+		, #{ pwd }
+		, #{ name }
+		, #{ email }
+		, #{ birthday }
+		, #{ gender }
+		)
+	</insert>
+	
+	<update id="updateMember">
+		UPDATE
+			   TB_MEMBER
+		   SET MEMBER_NAME = #{ name }
+		     , EMAIL = #{ email }
+		     , BIRTHDAY = #{ birthday }
+		     , GENDER = #{ gender }
+		 WHERE MEMBER_ID = #{ id }
+	</update>
+	
+	<select id="selectChangedMemberInfo" resultMap="memberResultMap">
+		SELECT
+			   MEMBER_ID
+			 , MEMBER_NAME
+			 , EMAIL
+			 , BIRTHDAY
+			 , GENDER
+			 , MEMBER_TYPE
+			 , FREEPASS_YN
+		  FROM TB_MEMBER
+		 WHERE MEMBER_ID = #{ id }
+	</select>
+	
+</mapper>
