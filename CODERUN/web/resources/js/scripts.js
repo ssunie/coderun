@@ -109,6 +109,7 @@ document.getElementById('imgfile').addEventListener('change', function () {
     }
   });
 
+
 //2. 비밀번호 유효성 검사
 function checkExistData(value, dataName) {
     if (value == "") {

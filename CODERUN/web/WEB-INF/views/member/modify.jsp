@@ -23,19 +23,27 @@
 	<jsp:include page="../common/menubar.jsp"/>
     <section class="page-section bg" id="modify" style="width: 1000px; margin: 0 auto;">
         <div class="container">
-            <form name=form id="modifyForm" action="${ pageContext.servletContext.contextPath }/member/modify" method="post">
                 <br><br>
 	            <h4>프로필 사진</h4>
 	            <br><br>
-	            <div class="d-grid col-2 mx-auto">
-	        		<div class="imgfix">
-	          			<img src="${ pageContext.servletContext.contextPath }/resources/img/profile-example.png" class="imgArea" id="imgArea">
-	        		</div>
-	        		<br>
-	        		<input type="file" id="imgfile">
-	      		</div>
+	            
+	            <form method="post" action="${ pageContext.servletContext.contextPath }/prfileImg/insert">
+		            <div class="d-grid col-2 mx-auto">
+		        		<div class="imgfix">
+		          			<img src="${ pageContext.servletContext.contextPath }/resources/img/profile-example.png" class="imgArea" id="imgArea">
+		        		</div>
+		        		<br>
+		        		<input type="file" id="imgfile" name="thumbnail" accept="image/gif,image/jpeg,image/png">
+		      		</div>
+		      		<div class="d-grid col-2 mx-auto">
+		      		<br>
+                    	<button class="btn btn-primary" type="submit" id="updateBtn">사진 변경</button>
+                	</div>
+	            </form>
+	            
 	      		<br><br>
 	      		<!-- 프리패스 소지한 회원인지 아닌지에 따라서 다르게 -->
+            <form name=form id="modifyForm" action="${ pageContext.servletContext.contextPath }/member/modify" method="post">
 	      		<div>
 	        		<img src="${ pageContext.servletContext.contextPath }/resources/img/crown.png" class="align-middle" style="width: 20px; margin-right: 5px;">
 	        		<span class="align-middle">프리패스를 소지한 회원입니다.</span>
