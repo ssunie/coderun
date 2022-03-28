@@ -109,67 +109,63 @@ document.getElementById('imgfile').addEventListener('change', function () {
     }
   });
 
-
-//2. 비밀번호 유효성 검사
 function checkExistData(value, dataName) {
-    if (value == "") {
-      alert(dataName + " 입력해주세요!");
-      return false;
-    }
-    return true;
-  }
+	if (value == "") {
+		alert(dataName + " 입력해주세요!");
+		return false;
+	}
+	return true;
+}
 
-  function checkAll() {
-    if (!checkPassword(form.memberPwd.value, form.memberPwd2.value)) {
-      return false;
-    } else {
-      return true;
-    }
-  }
+function checkAll() {
+	if (!checkPassword(document.getElementById('memberPwd').value, document.getElementById('memberPwd2').value)) {
+		return false;
+	} else {
+		return true;
+	}
+}
 
-  function checkPassword(memberPwd, memberPwd2) {
-    //비밀번호가 입력되었는지 확인하기
-    if (!checkExistData(memberPwd, "비밀번호를"))
-      return false;
-    //비밀번호 확인이 입력되었는지 확인하기
-    if (!checkExistData(memberPwd2, "비밀번호 확인을"))
-      return false;
+function checkPassword(memberPwd, memberPwd2) {
+	if (!checkExistData(memberPwd, "비밀번호를"))
+		return false;
+	if (!checkExistData(memberPwd2, "비밀번호 확인을"))
+		return false;
+	
+	var pwd1 = document.getElementById('memberPwd');
+	var pwd2 = document.getElementById('memberPwd2');
+	
+	var memberPwdRegExp = /^[a-zA-z0-9]{8,16}$/;
+	if (!memberPwdRegExp.test(pwd1.value)) {
+		alert("비밀번호는 영문 대소문자와 숫자 8~16자리로 입력해야합니다!");
+		pwd1.value = "";
+		pwd1.focus();
+		return false;
+	}
+	
+	if (memberPwd != memberPwd2) {
+		alert("비밀번호 확인이 올바르지 않습니다.");
+		pwd1.value = "";
+		pwd2.value = "";
+		pwd2.focus();
+		return false;
+	}
+	
+	return true;
+}
 
-    var memberPwdRegExp = /^[a-zA-z0-9]{8,16}$/; //비밀번호 유효성 검사
-    if (!memberPwdRegExp.test(memberPwd)) {
-      alert("비밀번호는 영문 대소문자와 숫자 8~16자리로 입력해야합니다!");
-      form.memberPwd.value = "";
-      form.memberPwd.focus();
-      return false;
-    }
-    //비밀번호와 비밀번호 확인이 맞지 않다면..
-    if (memberPwd != memberPwd2) {
-      alert("두 비밀번호가 맞지 않습니다.");
-      form.memberPwd.value = "";
-      form.memberPwd2.value = "";
-      form.memberPwd2.focus();
-      return false;
-    }
-    return true; //확인이 완료되었을 때
-  }
-
-  //3. 비밀번호 같은지 검사
-  function isSame() {
-    var pw = document.form.memberPwd.value;
-    var confirmPW = document.form.memberPwd2.value;
-    if (pw.length < 6 || pw.length > 16) {
-      window.alert('비밀번호는 6글자 이상, 16글자 이하만 이용 가능합니다.');
-      document.getElementById('memberPwd').value = document.getElementById('memberPwd2').value = '';
-      document.getElementById('same').innerHTML = '';
-    }
-    if (document.getElementById('memberPwd').value != '' && document.getElementById('memberPwd2').value != '') {
-      if (document.getElementById('memberPwd').value == document.getElementById('memberPwd2').value) {
-        document.getElementById('same').innerHTML = '비밀번호가 일치합니다.';
-        document.getElementById('same').style.color = 'blue';
-      }
-      else {
-        document.getElementById('same').innerHTML = '비밀번호가 일치하지 않습니다.';
-        document.getElementById('same').style.color = 'red';
-      }
-    }
-  }
+function isSame() {
+	if (document.getElementById('memberPwd').value.length < 6 || document.getElementById('memberPwd2').value.length > 16) {
+		window.alert('비밀번호는 6글자 이상, 16글자 이하만 이용 가능합니다.');
+		document.getElementById('memberPwd').value = document.getElementById('memberPwd2').value = '';
+		document.getElementById('same').innerHTML = '';
+	}
+	if (document.getElementById('memberPwd').value != '' && document.getElementById('memberPwd2').value != '') {
+		if (document.getElementById('memberPwd').value == document.getElementById('memberPwd2').value) {
+			document.getElementById('same').innerHTML = '비밀번호가 일치합니다.';
+			document.getElementById('same').style.color = 'blue';
+		} else {
+			document.getElementById('same').innerHTML = '비밀번호가 일치하지 않습니다.';
+			document.getElementById('same').style.color = 'red';
+		}
+	}
+}
