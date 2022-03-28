@@ -20,7 +20,15 @@
     </style>
 </head>
 <body>
-
+<script type="text/javascript">
+	(function() {
+		const result = "${ requestScope.loginFailed }";
+		if(result == "loginFailed") {
+		/* $("#loginFailedModal").modal("show"); */
+		alert('아이디 혹은 비밀번호가 틀렸습니다.');
+		}
+	})();
+</script>
 	<jsp:include page="../common/menubar.jsp"/>
 	<section class="page-section bg" style="width: 500px; margin: auto;">
         <div class="container">

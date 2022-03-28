@@ -38,6 +38,21 @@ public class MemberDAO {
 		return session.selectOne("MemberDAO.selectChangedMemberInfo", id);
 	}
 
+	public int searchPwdResult(SqlSession session, MemberDTO requestMember) {
+		return session.selectOne("MemberDAO.searchPwdResult", requestMember);
+	}
+
+	public int updateMemberPassword(SqlSession session, MemberDTO requestMember) {
+		return session.update("MemberDAO.updateMemberPassword", requestMember);
+	}
+	
+	public int deleteMember(SqlSession session, String id) {
+		return session.update("MemberDAO.deleteMember", id);
+	}
+
+	public int memberEmailCheck(SqlSession session, String email) {
+		return session.selectOne("MemberDAO.memberEmailCheck", email);
+	}
 
 	public int selectTotalCount(SqlSession session, Map<String, String> searchMap) {
 		

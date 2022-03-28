@@ -57,12 +57,25 @@
 		   AND MEMBER_STATUS = 'Y'
 	</select>
 	
+	<select id="searchPwdResult" resultType="_int">
+      SELECT COUNT(*)
+        FROM TB_MEMBER
+       WHERE MEMBER_ID = #{ id }
+         AND EMAIL = #{ email }
+   </select>
+	
 	<select id="memberIdCheck" resultType="_int">
 		SELECT COUNT(*)
 		  FROM TB_MEMBER
 		 WHERE MEMBER_ID = #{ id }
 		   AND MEMBER_STATUS = 'Y'
 	</select>
+	
+	<select id="memberEmailCheck" resultType="_int">
+      SELECT COUNT(*)
+        FROM TB_MEMBER
+       WHERE EMAIL = #{ email }
+   </select>
 	
 	<insert id="insertMember" parameterType="com.coderun.jsp.member.model.dto.MemberDTO">
 		INSERT INTO TB_MEMBER
@@ -149,5 +162,19 @@
           <!-- AND A.MEMBER_TYPE NOT IN ('관리자')
 		  AND A.MEMBER_STATUS = 'Y' -->
  	</select>
+ 	
+	<update id="updateMemberPassword">
+		UPDATE TB_MEMBER
+		SET MEMBER_PWD = #{ pwd }
+		WHERE MEMBER_ID = #{ id }
+		AND MEMBER_STATUS = 'Y'
+	</update>
+		
+	<update id="deleteMember">
+		UPDATE TB_MEMBER
+		SET MEMBER_STATUS = 'N'
+		WHERE MEMBER_ID = #{ id }
+		AND MEMBER_STATUS = 'Y'
+	</update>
 
 </mapper>
