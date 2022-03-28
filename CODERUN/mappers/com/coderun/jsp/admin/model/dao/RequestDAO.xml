@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="RequestDAO">
+	<resultMap type="com.coderun.jsp.admin.model.dto.RequestDTO" id="requestResultMap">
+		<id property="reqNo" column="REQ_NO"/>
+		<result property="approveStatus" column="REQ_APROV_STATUS"/>
+		<result property="reqDate" column="REQ_DATE"/>
+		<result property="" column="REQ_MEMBER_ID"/>
+		
+		<association property="member" resultMap="memberResultMap"/>
+	</resultMap>
+
+	<resultMap type="com.coderun.jsp.member.model.dto.MemberDTO" id="memberResultMap">
+		<id property="id" column="MEMBER_ID"/>
+		<result property="pwd" column="MEMBER_PWD"/>
+		<result property="name" column="MEMBER_NAME"/>
+		<result property="email" column="EMAIL"/>
+		<result property="birthday" column="BIRTHDAY"/>
+		<result property="gender" column="GENDER"/>
+		<result property="type" column="MEMBER_TYPE"/>
+		<result property="freepassYn" column="FREEPASS_YN"/>
+	</resultMap>
+
+	<insert id="insertRequest">
+		INSERT INTO TB_REQUEST
+			(
+			REQ_NO
+		  , REQ_DATE
+		  , REQ_MEMBER_ID
+		  	)
+		  VALUES
+		  (
+		  SEQ_REQ_NO.NEXTVAL
+		, #{ reqDate }
+		, #{ memberId }
+		  )
+	</insert>
+
+
+
+
+
+
+
+</mapper>

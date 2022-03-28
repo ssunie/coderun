@@ -38,10 +38,6 @@ public class MemberDAO {
 		return session.selectOne("MemberDAO.selectChangedMemberInfo", id);
 	}
 
-//	public List<MemberDTO> selectAllMember(SqlSession session) {
-//
-//		return session.selectList("MemberDAO.selectAllMemberList");
-//	}
 
 	public int selectTotalCount(SqlSession session, Map<String, String> searchMap) {
 		
@@ -52,8 +48,5 @@ public class MemberDAO {
 		
 		return session.selectList("MemberDAO.selectMemberList", selectCriteria);
 	}
-
-	
-
 
 }

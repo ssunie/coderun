@@ -1,6 +1,7 @@
 package com.coderun.jsp.member.model.service;
 
 import static com.coderun.jsp.common.mybatis.Template.getSqlSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -87,5 +88,20 @@ public class MemberService {
 		
 		return changedMemberInfo;
 	}
+
+//	public int modifyProfile(MemberDTO profileImg) {
+//		SqlSession session = getSqlSession();
+//		
+//		int result = memberDAO.modifyProfile(session, profileImg);
+//		
+//		if(result > 0) {
+//			session.commit();
+//		} else {
+//			session.rollback();
+//		}
+//		session.close();
+//		
+//		return result;
+//	}
 	
 }
