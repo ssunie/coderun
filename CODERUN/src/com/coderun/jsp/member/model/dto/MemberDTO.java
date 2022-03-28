@@ -14,7 +14,7 @@ public class MemberDTO {
 	private String type;
 	private String freepassYn;
 	private String status;
-	private ImageDTO image;
+  private ImageDTO image;
 	
 	public MemberDTO() {}
 
@@ -32,7 +32,7 @@ public class MemberDTO {
 		this.status = status;
 		this.image = image;
 	}
-
+	
 	public String getId() {
 		return id;
 	}
@@ -93,13 +93,16 @@ public class MemberDTO {
 		return freepassYn;
 	}
 
+
 	public void setFreepassYn(String freepassYn) {
 		this.freepassYn = freepassYn;
 	}
 
+
 	public String getStatus() {
 		return status;
 	}
+
 
 	public void setStatus(String status) {
 		this.status = status;
@@ -113,14 +116,12 @@ public class MemberDTO {
 		this.image = image;
 	}
 
+
 	@Override
 	public String toString() {
 		return "MemberDTO [id=" + id + ", pwd=" + pwd + ", name=" + name + ", email=" + email + ", birthday=" + birthday
 				+ ", gender=" + gender + ", type=" + type + ", freepassYn=" + freepassYn + ", status=" + status
 				+ ", image=" + image + "]";
 	}
-
-	
-	
 
 }
