@@ -19,6 +19,7 @@
 	<mappers>
 		<mapper resource="com/coderun/jsp/member/model/dao/MemberDAO.xml"/>
 		<mapper resource="com/coderun/jsp/mentor/model/dao/MentorDAO.xml"/>
+		<mapper resource="com/coderun/jsp/admin/model/dao/RequestDAO.xml"/>
 		<mapper resource="com/coderun/jsp/member/model/dao/ImageDAO.xml"/>
 	</mappers>
 </configuration>
