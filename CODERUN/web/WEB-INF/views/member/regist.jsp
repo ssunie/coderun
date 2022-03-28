@@ -203,9 +203,11 @@
     		}
     	});
     	
-    	if(isUsable1 == true && isUsable2 == true) {
-    		$("#joinBtn").attr('type', 'submit');
-    	}
+    	$("#joinBtn").click(function(){
+    		if((isUsable1 == true) && (isUsable2 == true)) {
+        		$("#joinBtn").attr("type", "submit");
+        	}
+    	});
     </script>
     
     <div class="modal fade" id="checkEmail" tabindex="-1" aria-labelledby="checkEmail" aria-hidden="true">
