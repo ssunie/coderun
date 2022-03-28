@@ -34,4 +34,8 @@ public class MemberDAO {
 		return session.selectOne("MemberDAO.selectChangedMemberInfo", id);
 	}
 
+//	public int modifyProfile(SqlSession session, MemberDTO profileImg) {
+//		return session.update("MemberDAO.updateProfile", profileImg);
+//	}
+
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.coderun.jsp.member.model.dto.ImageDTO;
 import com.coderun.jsp.member.model.dto.MemberDTO;
 import com.coderun.jsp.member.model.service.MemberService;
 
@@ -20,8 +21,10 @@ public class MemberLoginServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		ImageDTO image = new ImageDTO();
 		String memberId = request.getParameter("memberId");
 		String memberPwd = request.getParameter("memberPwd");
+		
 		
 		System.out.println("memberId : " + memberId);
 		System.out.println("memberPwd : " + memberPwd);
