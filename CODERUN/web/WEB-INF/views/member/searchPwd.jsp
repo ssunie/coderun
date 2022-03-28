@@ -18,15 +18,15 @@
     </style>
 </head>
 <body>
-	<script type="text/javascript">
-    	(function() {
-    		const result = "${ requestScope.searchPwdResult }";
-    		if(result == "fail") {
-    			alert('존재하지 않는 정보입니다. 이름 혹은 이메일을 확인해 주세요.');
-    		} else if(result == 'success') {
-    			alert('임시 비밀번호가 이메일로 전송되었습니다.');
-    		}
-    	})();
+   <script type="text/javascript">
+       (function() {
+          const result = "${ requestScope.searchPwdResult }";
+          if(result == "fail") {
+             alert('존재하지 않는 정보입니다. 이름 혹은 이메일을 확인해 주세요.');
+          } else if(result == 'success') {
+             alert('임시 비밀번호가 이메일로 전송되었습니다.');
+          }
+       })();
     </script>
     <jsp:include page="../common/menubar.jsp"/>
     <section class="page-section bg" id="searchPwd" style="width: 500px; margin: auto;">
@@ -35,7 +35,7 @@
             <h4>비밀번호 찾기</h4>
             <br>
             <form id="searchPwdForm" action="${ pageContext.servletContext.contextPath }/member/searchPwd" method="post" onsubmit="submitPwd()">
-            	<div class="mb-3">
+               <div class="mb-3">
                     <label class="form-label">아이디</label>
                     <input type="text" class="form-control" name="memberId" id="memberId" placeholder="아이디" required>
                 </div>
@@ -45,20 +45,20 @@
                 </div>
                 <input type="hidden" id="memberPwd" name="memberPwd" value='generatePassword'>
                 <input type="hidden" id="checkPwd" name="checkPwd" value='generatePassword'>
-	            <br><br>
-	            <div class="d-grid col-2 mx-auto">
-	                <button class="btn btn-primary" type="submit">확인</button>
-	            </div>
+               <br><br>
+               <div class="d-grid col-2 mx-auto">
+                   <button class="btn btn-primary" type="submit">확인</button>
+               </div>
             </form>
         </div>
         <script>
         var generatePassword = ( length = 10, wishlist = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" ) => Array(length)
-        		      .fill('')
-        		      .map(() => wishlist[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xffffffff + 1) * wishlist.length)])
-        		      .join('');
+                    .fill('')
+                    .map(() => wishlist[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xffffffff + 1) * wishlist.length)])
+                    .join('');
         
         function submitPwd() {
-        	document.getElementById('memberPwd').value = document.getElementById('checkPwd').value = generatePassword();
+           document.getElementById('memberPwd').value = document.getElementById('checkPwd').value = generatePassword();
             console.log("memberPwd : " + document.getElementById('memberPwd').value);
             console.log("checkPwd : " + document.getElementById('checkPwd').value);
         }

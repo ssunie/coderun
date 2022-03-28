@@ -18,17 +18,17 @@
     </style>
 </head>
 <body>
-	<script type="text/javascript">
-    	(function() {
-    		const result = "${ requestScope.searchId }";
-    		if(result == "failed") {
-    			alert('존재하지 않는 정보입니다. 이름 혹은 이메일을 확인해 주세요.');
-    		} else if(result == '') {
-    			console.log(result);
-    		} else {
-    			alert('아이디는 ' + result + "입니다.");
-    		}
-    	})();
+   <script type="text/javascript">
+       (function() {
+          const result = "${ requestScope.searchId }";
+          if(result == "failed") {
+             alert('존재하지 않는 정보입니다. 이름 혹은 이메일을 확인해 주세요.');
+          } else if(result == '') {
+             console.log(result);
+          } else {
+             alert('아이디는 ' + result + "입니다.");
+          }
+       })();
     </script>
     <jsp:include page="../common/menubar.jsp"/>
     <section class="page-section bg" id="searchId" style="width: 500px; margin: auto;">
@@ -37,7 +37,7 @@
             <h4>아이디 찾기</h4>
             <br>
             <form id="searchIdForm" action="${ pageContext.servletContext.contextPath }/member/searchId" method="post">
-            	<div class="mb-3">
+               <div class="mb-3">
                     <label class="form-label">이름</label>
                     <input type="text" class="form-control" name="memberName" id="memberName" placeholder="이름" required>
                 </div>
@@ -45,10 +45,10 @@
                     <label class="form-label">이메일</label>
                     <input type="text" class="form-control" name="email" id="email" placeholder="이메일" required>
                 </div>
-	            <br><br>
-	            <div class="d-grid col-2 mx-auto">
-	                <button class="btn btn-primary" type="submit">확인</button>
-	            </div>
+               <br><br>
+               <div class="d-grid col-2 mx-auto">
+                   <button class="btn btn-primary" type="submit">확인</button>
+               </div>
             </form>
         </div>
     </section>

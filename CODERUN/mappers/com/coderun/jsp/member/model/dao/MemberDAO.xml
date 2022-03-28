@@ -13,6 +13,15 @@
 		<result property="type" column="MEMBER_TYPE"/>
 		<result property="freepassYn" column="FREEPASS_YN"/>
 		<result property="status" column="MEMBER_STATUS"/>
+		<association property="image" resultMap="imageResultMap"/>
+	</resultMap>
+	
+ 	<resultMap type="com.coderun.jsp.member.model.dto.ImageDTO" id="imageResultMap">
+		<id property="no" column="IMG_NO"/>
+		<result property="origin" column="IMG_ORIGIN"/>
+		<result property="edit" column="IMG_EDIT"/>
+		<result property="root" column="IMG_ROOT"/>
+		<result property="memberId" column="IMT_MEMBER_ID"/>
 	</resultMap>
 	
 	<select id="selectEncryptedPwd" resultType="java.lang.String">
@@ -23,17 +32,21 @@
 	</select>
 	
 	<select id="selectLoginMember" resultMap="memberResultMap">
-		SELECT MEMBER_ID
-			 , MEMBER_NAME
-			 , EMAIL
-			 , BIRTHDAY
-			 , GENDER
-			 , MEMBER_TYPE
-			 , FREEPASS_YN
-			 , MEMBER_STATUS
-		  FROM TB_MEMBER
-		 WHERE MEMBER_ID = #{ id }
-		   AND MEMBER_STATUS = 'Y'
+		SELECT A.MEMBER_ID
+			 , A.MEMBER_NAME
+			 , A.EMAIL
+			 , A.BIRTHDAY
+			 , A.GENDER
+			 , A.MEMBER_TYPE
+			 , A.FREEPASS_YN
+			 , A.MEMBER_STATUS
+             , B.IMG_ORIGIN
+             , B.IMG_EDIT
+             , B.IMG_ROOT
+		  FROM TB_MEMBER A
+     LEFT JOIN TB_IMAGE B ON (A.MEMBER_ID = B.IMG_MEMBER_ID)
+		 WHERE A.MEMBER_ID = #{ id }
+		   AND A.MEMBER_STATUS = 'Y'
 	</select>
 	
 	<select id="searchId" resultType="java.lang.String">
@@ -41,26 +54,28 @@
 		  FROM TB_MEMBER
 		 WHERE MEMBER_NAME = #{ name }
 		   AND EMAIL = #{ email }
+		   AND MEMBER_STATUS = 'Y'
 	</select>
 	
 	<select id="searchPwdResult" resultType="_int">
-		SELECT COUNT(*)
-		  FROM TB_MEMBER
-		 WHERE MEMBER_ID = #{ id }
-		   AND EMAIL = #{ email }
-	</select>
+      SELECT COUNT(*)
+        FROM TB_MEMBER
+       WHERE MEMBER_ID = #{ id }
+         AND EMAIL = #{ email }
+   </select>
 	
 	<select id="memberIdCheck" resultType="_int">
 		SELECT COUNT(*)
 		  FROM TB_MEMBER
 		 WHERE MEMBER_ID = #{ id }
+		   AND MEMBER_STATUS = 'Y'
 	</select>
 	
 	<select id="memberEmailCheck" resultType="_int">
-		SELECT COUNT(*)
-		  FROM TB_MEMBER
-		 WHERE EMAIL = #{ email }
-	</select>
+      SELECT COUNT(*)
+        FROM TB_MEMBER
+       WHERE EMAIL = #{ email }
+   </select>
 	
 	<insert id="insertMember" parameterType="com.coderun.jsp.member.model.dto.MemberDTO">
 		INSERT INTO TB_MEMBER
@@ -109,18 +124,57 @@
 		   AND MEMBER_STATUS = 'Y'
 	</select>
 	
+
+	
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+		SELECT 
+			   COUNT(*)
+		  FROM TB_MEMBER
+		 <where>
+		 	<if test="searchCondition != null">
+		 	MEMBER_ID LIKE '%' || #{ searchValue } || '%' 
+		 	</if>
+		 </where>
+	</select>
+	
+	<select id="selectMemberList" resultMap="memberResultMap">
+		SELECT
+			   A.RNUM
+			 , A.MEMBER_TYPE
+			 , A.MEMBER_ID
+		  FROM (SELECT ROWNUM RNUM
+		  			 , B.MEMBER_TYPE
+		  			 , B.MEMBER_ID
+		  		  FROM (SELECT C.MEMBER_TYPE
+		  		  			 , C.MEMBER_ID
+		  		  		  FROM TB_MEMBER C
+		WHERE MEMBER_TYPE NOT IN ('관리자')
+		  AND MEMBER_STATUS = 'Y'
+	 	<if test="searchCondition != null">
+	 	AND MEMBER_ID LIKE '%' || #{ searchValue } || '%' 
+	 	</if>
+	 	) B
+		<![CDATA[
+        WHERE ROWNUM <= #{ endRow }
+        ]]> 
+        ) A
+        WHERE A.RNUM >= #{ startRow }
+          <!-- AND A.MEMBER_TYPE NOT IN ('관리자')
+		  AND A.MEMBER_STATUS = 'Y' -->
+ 	</select>
+ 	
 	<update id="updateMemberPassword">
 		UPDATE TB_MEMBER
-		   SET MEMBER_PWD = #{ pwd }
-		 WHERE MEMBER_ID = #{ id }
-		   AND MEMBER_STATUS = 'Y'
+		SET MEMBER_PWD = #{ pwd }
+		WHERE MEMBER_ID = #{ id }
+		AND MEMBER_STATUS = 'Y'
 	</update>
-	
+		
 	<update id="deleteMember">
 		UPDATE TB_MEMBER
-		   SET MEMBER_STATUS = 'N'
-		 WHERE MEMBER_ID = #{ id }
-		   AND MEMBER_STATUS = 'Y'
+		SET MEMBER_STATUS = 'N'
+		WHERE MEMBER_ID = #{ id }
+		AND MEMBER_STATUS = 'Y'
 	</update>
-	
+
 </mapper>

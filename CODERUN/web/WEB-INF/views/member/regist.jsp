@@ -82,132 +82,132 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     
     <script>    
-    	var isUsable1 = false;
-    	var isUsable2 = false;
+       var isUsable1 = false;
+       var isUsable2 = false;
     
-    	$("#idCheck").click(function(){
-    		const memberId = $("[name=memberId]");
-    		
-    		if(!memberId || memberId.val().length < 6) {
-    			alert("아이디는 최소 6자리 이상이어야 합니다.");
-    			memberId.focus();
-    		} else {
-    			$.ajax({
-    				url: "${ pageContext.servletContext.contextPath }/member/idCheck",
-    				type: "post",
-    				data: { memberId : memberId.val() },
-    				success: function(result) {
-    					if(result == "fail") {
-    						alert("사용할 수 없는 아이디입니다.");
-    						memberId.focus();
-    					} else {
-    						if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
-    							memberId.attr('readonly', true);
-    							isUsable1 = true;
-    						} else {
-    							memberId.attr('readonly', false);
-    							isUsable1 = false;
-    							memberId.focus();
-    						}
-    					}
-    				},
-    				error: function(e) {
-    					console.log(e);
-    				}
-    			});
-    		}
-    	});
-    	
-    	$("#emailAuthBtn").click(function(){
-    		var isUsable2 = false;
-    		var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
-    		var email = document.joinForm.email.value;
-    		
-    		if(!check(emailPattern, email, "유효하지 않은 이메일 주소입니다.")) {
-    			return false;
-    		} else {
-    			$.ajax({
-    				url: "${ pageContext.servletContext.contextPath }/member/emailCheck",
-    				type: "get",
-    				data: { email : email },
-    				success: function(result) {
-    					if(result == "fail") {
-    						alert("사용할 수 없는 이메일입니다.");
-    						$("#inputEmailForm").focus();
-    					} else {
-    						if(confirm("사용 가능한 이메일입니다. 사용하시겠습니까?")) {
-    							$("#inputEmailForm").attr('readonly', true);
-    							$("#inputAuthCode").attr('readonly', false);
-    							requestAuthEmail();
-    						} else {
-    							$("#inputEmailForm").attr('readonly', false);
-    							$("#inputAuthCode").attr('readonly', true);
-    							$("#inputEmailForm").focus();
-    						}
-    					}
-    				},
-    				error: function(e) {
-    					console.log(e);
-    				}
-    			});
-    		}    		
-    	});
-    	
-    	function check(pattern, target, message) {
-    		if(pattern.test(target)) {
-    			return true;
-    		}
-    		alert(message);
-    		target.focus();
-    		return false;
-    	}
-    	
-    	var generateCode = ( length = 6, wishlist = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" ) => Array(length)
-	      .fill('')
-	      .map(() => wishlist[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xffffffff + 1) * wishlist.length)])
-	      .join('');
-    	
-    	function requestAuthEmail() {    		
-    		var email = document.joinForm.email.value;
-    		var checkCode = generateCode();
-    		document.getElementById('authPass').value = checkCode;
-    		    		
-    		$.ajax({
-				url: "${ pageContext.servletContext.contextPath }/member/emailCheck",
-				type: "post",
-				data: { email : email, checkCode : checkCode },
-				success: function(result) {
-					if(result == "fail") {
-						alert("인증 번호 전송에 실패했습니다.");
-					} else {
-						alert("인증 번호를 전송했습니다. 메일을 확인해 주세요.");
-					}
-				},
-				error: function(e) {
-					console.log(e);
-				}
-			});
-    	}
-    	
-    	$("#authCodeCheckBtn").click(function(){
-    		var inputCode = $("#inputAuthCode");
-    		var authPass = $("#authPass");
-    		
-    		if($("#authPass").val() == $("#inputAuthCode").val()) {
-    			alert("인증에 성공했습니다.");
-    			isUsable2 = true;
-    			$("#inputAuthCode").attr('readonly', true);
-    		} else {
-    			alert("인증 번호를 다시 확인해 주세요.");
-    			isUsable2 = false;
-    		}
-    	});
-    	
-    	$("#joinBtn").click(function(){
-    		if((isUsable1 == true) && (isUsable2 == true)) {
-        		$("#joinBtn").attr("type", "submit");
-        	}
-    	});
+       $("#idCheck").click(function(){
+          const memberId = $("[name=memberId]");
+          
+          if(!memberId || memberId.val().length < 6) {
+             alert("아이디는 최소 6자리 이상이어야 합니다.");
+             memberId.focus();
+          } else {
+             $.ajax({
+                url: "${ pageContext.servletContext.contextPath }/member/idCheck",
+                type: "post",
+                data: { memberId : memberId.val() },
+                success: function(result) {
+                   if(result == "fail") {
+                      alert("사용할 수 없는 아이디입니다.");
+                      memberId.focus();
+                   } else {
+                      if(confirm("사용 가능한 아이디입니다. 사용하시겠습니까?")) {
+                         memberId.attr('readonly', true);
+                         isUsable1 = true;
+                      } else {
+                         memberId.attr('readonly', false);
+                         isUsable1 = false;
+                         memberId.focus();
+                      }
+                   }
+                },
+                error: function(e) {
+                   console.log(e);
+                }
+             });
+          }
+       });
+       
+       $("#emailAuthBtn").click(function(){
+          var isUsable2 = false;
+          var emailPattern = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+          var email = document.joinForm.email.value;
+          
+          if(!check(emailPattern, email, "유효하지 않은 이메일 주소입니다.")) {
+             return false;
+          } else {
+             $.ajax({
+                url: "${ pageContext.servletContext.contextPath }/member/emailCheck",
+                type: "get",
+                data: { email : email },
+                success: function(result) {
+                   if(result == "fail") {
+                      alert("사용할 수 없는 이메일입니다.");
+                      $("#inputEmailForm").focus();
+                   } else {
+                      if(confirm("사용 가능한 이메일입니다. 사용하시겠습니까?")) {
+                         $("#inputEmailForm").attr('readonly', true);
+                         $("#inputAuthCode").attr('readonly', false);
+                         requestAuthEmail();
+                      } else {
+                         $("#inputEmailForm").attr('readonly', false);
+                         $("#inputAuthCode").attr('readonly', true);
+                         $("#inputEmailForm").focus();
+                      }
+                   }
+                },
+                error: function(e) {
+                   console.log(e);
+                }
+             });
+          }          
+       });
+       
+       function check(pattern, target, message) {
+          if(pattern.test(target)) {
+             return true;
+          }
+          alert(message);
+          target.focus();
+          return false;
+       }
+       
+       var generateCode = ( length = 6, wishlist = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" ) => Array(length)
+         .fill('')
+         .map(() => wishlist[Math.floor(crypto.getRandomValues(new Uint32Array(1))[0] / (0xffffffff + 1) * wishlist.length)])
+         .join('');
+       
+       function requestAuthEmail() {          
+          var email = document.joinForm.email.value;
+          var checkCode = generateCode();
+          document.getElementById('authPass').value = checkCode;
+                    
+          $.ajax({
+            url: "${ pageContext.servletContext.contextPath }/member/emailCheck",
+            type: "post",
+            data: { email : email, checkCode : checkCode },
+            success: function(result) {
+               if(result == "fail") {
+                  alert("인증 번호 전송에 실패했습니다.");
+               } else {
+                  alert("인증 번호를 전송했습니다. 메일을 확인해 주세요.");
+               }
+            },
+            error: function(e) {
+               console.log(e);
+            }
+         });
+       }
+       
+       $("#authCodeCheckBtn").click(function(){
+          var inputCode = $("#inputAuthCode");
+          var authPass = $("#authPass");
+          
+          if($("#authPass").val() == $("#inputAuthCode").val()) {
+             alert("인증에 성공했습니다.");
+             isUsable2 = true;
+             $("#inputAuthCode").attr('readonly', true);
+          } else {
+             alert("인증 번호를 다시 확인해 주세요.");
+             isUsable2 = false;
+          }
+       });
+       
+       $("#joinBtn").click(function(){
+          if((isUsable1 == true) && (isUsable2 == true)) {
+              $("#joinBtn").attr("type", "submit");
+           }
+       });
     </script>
     
     <div class="modal fade" id="checkEmail" tabindex="-1" aria-labelledby="checkEmail" aria-hidden="true">

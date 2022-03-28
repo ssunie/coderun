@@ -20,15 +20,15 @@
     </style>
 </head>
 <body>
-	<script type="text/javascript">
-    	(function() {
-    		const result = "${ requestScope.loginFailed }";
-    		if(result == "loginFailed") {
-    			/* $("#loginFailedModal").modal("show"); */
-    			alert('아이디 혹은 비밀번호가 틀렸습니다.');
-    		}
-    	})();
-    </script>
+<script type="text/javascript">
+	(function() {
+		const result = "${ requestScope.loginFailed }";
+		if(result == "loginFailed") {
+		/* $("#loginFailedModal").modal("show"); */
+		alert('아이디 혹은 비밀번호가 틀렸습니다.');
+		}
+	})();
+</script>
 	<jsp:include page="../common/menubar.jsp"/>
 	<section class="page-section bg" style="width: 500px; margin: auto;">
         <div class="container">
@@ -66,6 +66,15 @@
             </div>
         </div>
     </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+    	(function() {
+    		const result = "${ requestScope.loginFailed }";
+    		if(result == "loginFailed") {
+    			/* $("#loginFailedModal").modal("show"); */
+    			alert('아이디 혹은 비밀번호가 틀렸습니다.');
+    		}
+    	})();
+    </script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

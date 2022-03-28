@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.coderun.jsp.member.model.dto.MemberDTO;
 import com.coderun.jsp.member.model.service.MemberService;
 
 @WebServlet("/member/emailCheck")
