@@ -54,12 +54,16 @@
 	        		<input type="file" id="imgfile">
 	      		</div>
 	      		<br><br>
-	      		<!-- 프리패스 소지한 회원인지 아닌지에 따라서 다르게 -->
-	      		<div>
-	        		<img src="${ pageContext.servletContext.contextPath }/resources/img/crown.png" class="align-middle" style="width: 20px; margin-right: 5px;">
-	        		<span class="align-middle">프리패스를 소지한 회원입니다.</span>
-	      		</div>
-	      		<br>
+				<!-- 프리패스 소지한 회원인지 아닌지에 따라서 다르게 -->
+            <form name=form id="modifyForm" action="${ pageContext.servletContext.contextPath }/member/modify" method="post">
+                <c:if test="${ loginMember.freepassYn eq 'Y' }"> 
+                  <div>
+                    <img src="${ pageContext.servletContext.contextPath }/resources/img/crown.png" class="align-middle" style="width: 20px; margin-right: 5px;">
+                    <span class="align-middle">프리패스를 소지한 회원입니다.</span>
+                  </div>
+               </c:if>
+               
+               <br>
                 <div class="mb-3">
                     <label class="form-label">이름</label>
                     <input type="text" class="form-control" name="memberName" id="memberName" value="${ loginMember.name }" requried>
