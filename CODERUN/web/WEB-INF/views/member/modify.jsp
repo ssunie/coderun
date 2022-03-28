@@ -17,6 +17,11 @@
         .img-responsive {
             display: inline-block;
         }
+        
+        .imgArea {
+        	margin: auto;
+        	height: 200px;
+        }
     </style>
 </head>
 <body>
@@ -27,13 +32,20 @@
 	            <h4>프로필 사진</h4>
 	            <br><br>
 	            
-	            <form method="post" action="${ pageContext.servletContext.contextPath }/prfileImg/insert">
+	            <form method="post" action="${ pageContext.servletContext.contextPath }/profileImg/insert" enctype="multipart/form-data">
 		            <div class="d-grid col-2 mx-auto">
 		        		<div class="imgfix">
-		          			<img src="${ pageContext.servletContext.contextPath }/resources/img/profile-example.png" class="imgArea" id="imgArea">
+						<!-- c:if문 작성 -->
+						<c:if test="${ empty loginMember.image.edit }">
+							<img src="${ pageContext.servletContext.contextPath }/resources/img/user-icon.png" class="imgArea" id="imgArea">
+						</c:if>
+						<c:if test="${ !empty loginMember.image.edit }">
+							<img src="${ pageContext.servletContext.contextPath }${ loginMember.image.root }/${ loginMember.image.edit }" class="imgArea" id="imgArea">
+						</c:if>
+		        			<input type="file" id="imgfile" name="thumbnail" accept="image/gif,image/jpeg,image/png">
+		          			<%-- <img src="${ pageContext.servletContext.contextPath }/resources/img/profile-example.png" class="imgArea" id="imgArea"> --%>
 		        		</div>
 		        		<br>
-		        		<input type="file" id="imgfile" name="thumbnail" accept="image/gif,image/jpeg,image/png">
 		      		</div>
 		      		<div class="d-grid col-2 mx-auto">
 		      		<br>
@@ -192,7 +204,7 @@
 			if(result == "success"){
 				alert('정보 수정에 성공하셨습니다.')
 			} else if(result == "fail"){
-				alert('정보 수정에 실패하셨습니다.')
+				alert('정보 수정에 실패하셨습니다.') //sendRedirect로 수정 , 로그인할 때 프로필이미지 가져오기
 			}
 		})();
 	</script>

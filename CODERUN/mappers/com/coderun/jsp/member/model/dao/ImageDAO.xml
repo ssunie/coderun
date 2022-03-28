@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ImageDAO">
+	
+	<resultMap type="com.coderun.jsp.member.model.dto.ImageDTO" id="imageResultMap">
+		<id property="no" column="IMG_NO"/>
+		<result property="origin" column="IMG_ORIGIN"/>
+		<result property="edit" column="IMG_EDIT"/>
+		<result property="root" column="IMG_ROOT"/>
+		<result property="memberId" column="IMG_MEMBER_ID"/>
+	</resultMap> 
+	
+	<select id="checkProfile" resultType="java.lang.String">
+		SELECT
+			   IMG_EDIT
+		  FROM TB_IMAGE
+		 WHERE IMG_MEMBER_ID = #{ memberId }
+	</select>
+	
+	<update id="updateProfile">
+		UPDATE
+			   TB_IMAGE
+		   SET IMG_ORIGIN = #{ origin }
+		   	 , IMG_EDIT = #{ edit }
+		   	 , IMG_ROOT = #{ root }
+		 WHERE IMG_MEMBER_ID = #{ memberId }
+	</update>
+	
+	<insert id="insertProfile">
+		INSERT INTO TB_IMAGE
+		
+		VALUES
+		(SEQ_IMG_NO.NEXTVAL,
+		 #{ origin },
+		 #{ edit },
+		 #{ root },
+		 #{ memberId })
+	</insert>
+	
+</mapper>
