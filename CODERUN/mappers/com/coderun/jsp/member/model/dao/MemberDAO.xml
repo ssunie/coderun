@@ -12,6 +12,7 @@
 		<result property="gender" column="GENDER"/>
 		<result property="type" column="MEMBER_TYPE"/>
 		<result property="freepassYn" column="FREEPASS_YN"/>
+		<result property="status" column="MEMBER_STATUS"/>
 	</resultMap>
 	
 	<select id="selectEncryptedPwd" resultType="java.lang.String">
@@ -88,5 +89,52 @@
 		  FROM TB_MEMBER
 		 WHERE MEMBER_ID = #{ id }
 	</select>
+	
+	<!-- <select id="selectAllMemberList" resultMap="memberResultMap">
+		SELECT
+			   MEMBER_TYPE
+			 , MEMBER_ID
+		  FROM TB_MEMBER
+		 WHERE MEMBER_TYPE NOT IN ('관리자')
+	</select> -->
+	
+	<select id="selectTotalCount" resultType="_int" parameterType="hashmap">
+		SELECT 
+			   COUNT(*)
+		  FROM TB_MEMBER
+		 <where>
+		 	<if test="searchCondition != null">
+		 	MEMBER_ID LIKE '%' || #{ searchValue } || '%' 
+		 	</if>
+		 </where>
+ 		
+		
+	</select>
+	
+	<select id="selectMemberList" resultMap="memberResultMap">
+		SELECT
+			   A.RNUM
+			 , A.MEMBER_TYPE
+			 , A.MEMBER_ID
+		  FROM (SELECT ROWNUM RNUM
+		  			 , B.MEMBER_TYPE
+		  			 , B.MEMBER_ID
+		  		  FROM (SELECT C.MEMBER_TYPE
+		  		  			 , C.MEMBER_ID
+		  		  		  FROM TB_MEMBER C
+		WHERE MEMBER_TYPE NOT IN ('관리자')
+		  AND MEMBER_STATUS = 'Y'
+	 	<if test="searchCondition != null">
+	 	AND MEMBER_ID LIKE '%' || #{ searchValue } || '%' 
+	 	</if>
+	 	) B
+		<![CDATA[
+        WHERE ROWNUM <= #{ endRow }
+        ]]> 
+        ) A
+        WHERE A.RNUM >= #{ startRow }
+          <!-- AND A.MEMBER_TYPE NOT IN ('관리자')
+		  AND A.MEMBER_STATUS = 'Y' -->
+ 	</select>
 	
 </mapper>

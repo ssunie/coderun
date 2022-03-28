@@ -19,13 +19,13 @@
                 <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="navbar-brand" href="#"><img src="${ pageContext.servletContext.contextPath }/resources/img/logo.png" alt="..." style="width: 190px; margin-left: 10px;"/></a>
+                            <a class="navbar-brand" href="${ pageContext.servletContext.contextPath }"><img src="${ pageContext.servletContext.contextPath }/resources/img/logo.png" alt="..." style="width: 190px; margin-left: 10px;"/></a>
                             <br><br>
-                            <a class="nav-link collapsed" href="/관리자/관리자 로그인 후 대시보드.html">
+                            <a class="nav-link collapsed" href="${ pageContext.servletContext.contextPath }/admin/dashboard">
                                 대시보드
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
-                            <a class="nav-link collapsed" href="/관리자/관리자 회원 정보 조회.html">
+                            <a class="nav-link collapsed" href="${ pageContext.servletContext.contextPath }/admin/member/list">
                                 회원 정보 조회
                                 <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                             </a>
@@ -50,7 +50,7 @@
                               <strong>관리자</strong>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-dark text-small shadow" aria-labelledby="dropdownUser1">
-                              <li><a class="dropdown-item" href="관리자 로그인 전 대시보드.html">Sign out</a></li>
+                              <li><a class="dropdown-item" href="${ pageContext.servletContext.contextPath }/member/logout">Sign out</a></li>
                             </ul>
                           </div>
                     </div>
