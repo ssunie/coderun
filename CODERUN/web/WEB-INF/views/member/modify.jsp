@@ -17,42 +17,42 @@
         .img-responsive {
             display: inline-block;
         }
-        
-        .imgArea {
-        	margin: auto;
-        	height: 200px;
-        }
     </style>
 </head>
 <body>
+	<script>
+		(function(){
+			const modifyResult = "${ requestScope.modifyResult }";
+			if(modifyResult == "success"){
+				alert('정보 수정에 성공했습니다.')
+			} else if(modifyResult == "fail"){
+				alert('정보 수정에 실패했습니다.')
+			}
+		})();
+		
+		(function(){
+			const modifyPwdResult = "${ requestScope.modifyPasswordResult }";
+			if(modifyPwdResult == "success"){
+				alert('비밀번호 수정에 성공했습니다.')
+			} else if(modifyPwdResult == "fail"){
+				alert('비밀번호 수정에 실패했습니다.')
+			}
+		})();
+	</script>
 	<jsp:include page="../common/menubar.jsp"/>
     <section class="page-section bg" id="modify" style="width: 1000px; margin: 0 auto;">
         <div class="container">
+            <form name=form id="modifyForm" action="${ pageContext.servletContext.contextPath }/member/modify" method="post">
                 <br><br>
 	            <h4>프로필 사진</h4>
 	            <br><br>
-	            
-	            <form method="post" action="${ pageContext.servletContext.contextPath }/profileImg/insert" enctype="multipart/form-data">
-		            <div class="d-grid col-2 mx-auto">
-		        		<div class="imgfix">
-						<!-- c:if문 작성 -->
-						<c:if test="${ empty loginMember.image.edit }">
-							<img src="${ pageContext.servletContext.contextPath }/resources/img/user-icon.png" class="imgArea" id="imgArea">
-						</c:if>
-						<c:if test="${ !empty loginMember.image.edit }">
-							<img src="${ pageContext.servletContext.contextPath }${ loginMember.image.root }/${ loginMember.image.edit }" class="imgArea" id="imgArea">
-						</c:if>
-		        			<input type="file" id="imgfile" name="thumbnail" accept="image/gif,image/jpeg,image/png">
-		          			<%-- <img src="${ pageContext.servletContext.contextPath }/resources/img/profile-example.png" class="imgArea" id="imgArea"> --%>
-		        		</div>
-		        		<br>
-		      		</div>
-		      		<div class="d-grid col-2 mx-auto">
-		      		<br>
-                    	<button class="btn btn-primary" type="submit" id="updateBtn">사진 변경</button>
-                	</div>
-	            </form>
-	            
+	            <div class="d-grid col-2 mx-auto">
+	        		<div class="imgfix">
+	          			<img src="${ pageContext.servletContext.contextPath }/resources/img/profile-example.png" class="imgArea" id="imgArea">
+	        		</div>
+	        		<br>
+	        		<input type="file" id="imgfile">
+	      		</div>
 	      		<br><br>
 				<!-- 프리패스 소지한 회원인지 아닌지에 따라서 다르게 -->
             <form name=form id="modifyForm" action="${ pageContext.servletContext.contextPath }/member/modify" method="post">
@@ -104,7 +104,7 @@
                 </c:if>
                 <br><br>
                 <div class="d-grid col-2 mx-auto">
-		          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+		          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modifyPassword"
 		            data-bs-whatever="@mdo">비밀번호 변경</button>
         		</div>
         		<br>
@@ -113,7 +113,7 @@
                 </div>
                 <br><br>
                 <div class="d-grid col-2 mx-auto">
-                	<a class="btn btn-secondary" data-bs-toggle="modal" href="#exampleModalToggle" role="button">회원 탈퇴</a>
+                	<a class="btn btn-secondary" data-bs-toggle="modal" href="#confirmRemove" role="button">회원 탈퇴</a>
                 </div>
             </form>
         </div>
@@ -125,49 +125,55 @@
             </div>
         </div>
     </footer>
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="modifyPassword" tabindex="-1" aria-labelledby="modifyPassword"
             aria-hidden="true">
 	    <div class="modal-dialog">
 	      <div class="modal-content">
 	        <div class="modal-header">
-	          <h5 class="modal-title" id="exampleModalLabel">비밀번호 변경</h5>
+	          <h5 class="modal-title">비밀번호 변경</h5>
 	          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	        </div>
 	        <div class="modal-body">
-	          <form name=form method="post" onsubmit="checkAll()">
+	          <form name="modifyPwd">
 	            <div class="mb-3">
-	              <label for="recipient-name" class="col-form-label">현재 비밀번호</label>
-	              <input type="password" class="form-control" id="recipient-name" placeholder="현재 비밀번호" required>
+	              <label class="col-form-label">현재 비밀번호</label>
+	              <input type="password" class="form-control" name="checkPwd" id="checkPwd" placeholder="현재 비밀번호" required>
 	            </div>
 	            <div class="mb-3">
-	              <label for="recipient-name" class="col-form-label">변경할 비밀번호</label>
-	              <input type="password" class="pw form-control" name="password1" id="pw" placeholder="변경할 비밀번호"
-	                required>
+	              <label class="col-form-label">변경할 비밀번호</label>
+	              <input type="password" class="pw form-control" name="memberPwd" id="memberPwd" placeholder="변경할 비밀번호" required>
 	              <span class="helper">
 	                8~16자리의 영문 대소문자, 숫자를 조합하여 설정
 	              </span>
 	            </div>
 	            <div class="mb-3">
-	              <label for="recipient-name" class="col-form-label">변경할 비밀번호 확인</label>
-	              <input type="password" class="pw form-control" name="password2" id="pwCheck" onchange="isSame()"
-	                placeholder="변경할 비밀번호 확인" required>
+	              <label class="col-form-label">변경할 비밀번호 확인</label>
+	              <input type="password" class="pw form-control" name="memberPwd2" id="memberPwd2" placeholder="변경할 비밀번호 확인" required>
 	              &nbsp;&nbsp; <span id="same"></span>
 	            </div>
 	            <div class="modal-footer">
 	              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	              <button type="submit" class="btn btn-primary">변경</button>
+	              <button type="button" class="btn btn-primary" id="updateBtn" onclick="clickModify(modifyPwd)">변경</button>
 	            </div>
+	            
+	            <script>
+	            	function clickModify(formName) {
+	            		formName.action = "${ pageContext.servletContext.contextPath }/member/modifyPassword";
+	            		formName.method = "post";
+	            		formName.submit();
+	            	}
+	            </script>
 	          </form>
 	        </div>
 	      </div>
 	    </div>
 	  </div>
-	  <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+	  <div class="modal fade" id="confirmRemove" aria-hidden="true" aria-labelledby="confirmRemove"
           tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel">회원 탈퇴</h5>
+                <h5 class="modal-title" id="confirmRemove">회원 탈퇴</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
@@ -178,41 +184,35 @@
                 탈퇴 하시겠습니까?<br><br>
               </div>
               <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-target="#exampleModalToggle2"
+                <button class="btn btn-primary" data-bs-target="#confirmRemove2"
                   data-bs-toggle="modal">탈퇴하기</button>
               </div>
             </div>
           </div>
         </div>
-        <div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+        <div class="modal fade" id="confirmRemove2" aria-hidden="true" aria-labelledby="confirmRemove2"
           tabindex="-1">
           <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalToggleLabel2">회원 탈퇴</h5>
+                <h5 class="modal-title" id="confirmRemove2">회원 탈퇴</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body">
                 회원 탈퇴가 완료되었습니다.
               </div>
               <div class="modal-footer">
-                <button class="btn btn-primary" data-bs-toggle="modal">닫기</button>
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" onclick="clickRemove()">닫기</button>
               </div>
+              <script>
+              	function clickRemove() {
+              		location.href = "${ pageContext.servletContext.contextPath }/member/remove";
+              	}
+              </script>
             </div>
           </div>
         </div>
-    <script>
-		(function(){
-			const result = "${ requestScope.modifyResult }";
-			if(result == "success"){
-				alert('정보 수정에 성공하셨습니다.')
-			} else if(result == "fail"){
-				alert('정보 수정에 실패하셨습니다.') //sendRedirect로 수정 , 로그인할 때 프로필이미지 가져오기
-			}
-		})();
-	</script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="${ pageContext.servletContext.contextPath }/resources/js/scripts.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
