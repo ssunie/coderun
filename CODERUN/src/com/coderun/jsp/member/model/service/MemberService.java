@@ -72,7 +72,6 @@ public class MemberService {
 	}
 	
 	public MemberDTO modifyMember(MemberDTO requestMember) {
-		
 		SqlSession session = getSqlSession();
 		MemberDTO changedMemberInfo = null;
 		
@@ -89,19 +88,85 @@ public class MemberService {
 		return changedMemberInfo;
 	}
 
-//	public int modifyProfile(MemberDTO profileImg) {
-//		SqlSession session = getSqlSession();
-//		
-//		int result = memberDAO.modifyProfile(session, profileImg);
-//		
-//		if(result > 0) {
-//			session.commit();
-//		} else {
-//			session.rollback();
-//		}
-//		session.close();
-//		
-//		return result;
-//	}
+	public int searchPwdResult(MemberDTO requestMember) {
+		SqlSession session = getSqlSession();
+		int searchPwdResult = 0;
+		
+		searchPwdResult = memberDAO.searchPwdResult(session, requestMember);
+		
+		session.close();
+		
+		return searchPwdResult;
+	}
+
+	public int modifyPassword(MemberDTO requestMember, String memberPwd) {
+		SqlSession session = getSqlSession();
+		int result = 0;
+		
+		String encPwd = memberDAO.selectEncryptedPwd(session, requestMember);
+		
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		
+		System.out.println(passwordEncoder.matches(requestMember.getPwd(), encPwd));
+		
+		if(passwordEncoder.matches(requestMember.getPwd(), encPwd)) {
+			requestMember.setPwd(memberPwd);
+			result = memberDAO.updateMemberPassword(session, requestMember);
+		}
+		
+		if(result > 0) {
+			session.commit();
+		} else {
+			session.rollback();
+		}
+		
+		session.close();
+		
+		return result;
+	}
+
+	public int removeMember(String id) {
+		SqlSession session = getSqlSession();
+		
+		int result = memberDAO.deleteMember(session, id);
+		
+		if(result > 0) {
+			session.commit();
+		} else {
+			session.rollback();
+		}
+		
+		session.close();
+		
+		return result;
+	}
+
+	public int searchPwd(MemberDTO requestMember, String changePwd) {
+		SqlSession session = getSqlSession();
+		int result = 0;
+		
+		requestMember.setPwd(changePwd);
+		result = memberDAO.updateMemberPassword(session, requestMember);
+		
+		if(result > 0) {
+			session.commit();
+		} else {
+			session.rollback();
+		}
+		
+		session.close();
+		
+		return result;
+	}
+
+	public int memberEmailCheck(String email) {
+		SqlSession session = getSqlSession();
+		
+		int result = memberDAO.memberEmailCheck(session, email);
+		
+		session.close();
+		
+		return result;
+	}
 	
 }

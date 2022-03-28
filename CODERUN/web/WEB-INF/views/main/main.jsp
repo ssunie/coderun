@@ -14,6 +14,13 @@
         <link href="${ pageContext.servletContext.contextPath }/resources/css/main-style.css" rel="stylesheet">
     </head>
     <body id="page-top">
+	    <script type="text/javascript">
+	    	(function() {
+	    		const result = "${ requestScope.message }";
+	    		if(result == "fail")
+	    		alert("회원 탈퇴에 실패했습니다.");
+	    	})();
+	    </script>
         <!-- Navigation-->
         <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
             <div class="container">

@@ -1,11 +1,7 @@
 package com.coderun.jsp.member.model.dao;
 
-import java.util.List;
-import java.util.Map;
-
 import org.apache.ibatis.session.SqlSession;
 
-import com.coderun.jsp.common.paging.SelectCriteria;
 import com.coderun.jsp.member.model.dto.MemberDTO;
 
 public class MemberDAO {
@@ -38,15 +34,20 @@ public class MemberDAO {
 		return session.selectOne("MemberDAO.selectChangedMemberInfo", id);
 	}
 
-
-	public int selectTotalCount(SqlSession session, Map<String, String> searchMap) {
-		
-		return session.selectOne("MemberDAO.selectTotalCount", searchMap);
+	public int searchPwdResult(SqlSession session, MemberDTO requestMember) {
+		return session.selectOne("MemberDAO.searchPwdResult", requestMember);
 	}
 
-	public List<MemberDTO> selectMemberList(SqlSession session, SelectCriteria selectCriteria) {
-		
-		return session.selectList("MemberDAO.selectMemberList", selectCriteria);
+	public int updateMemberPassword(SqlSession session, MemberDTO requestMember) {
+		return session.update("MemberDAO.updateMemberPassword", requestMember);
+	}
+
+	public int deleteMember(SqlSession session, String id) {
+		return session.update("MemberDAO.deleteMember", id);
+	}
+
+	public int memberEmailCheck(SqlSession session, String email) {
+		return session.selectOne("MemberDAO.memberEmailCheck", email);
 	}
 
 }
